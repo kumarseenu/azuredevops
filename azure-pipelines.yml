@@ -19,3 +19,15 @@ steps
 
 - script docker push my-image:v1.0 .
   displayName: Push image 
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
